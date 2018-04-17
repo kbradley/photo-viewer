@@ -6,9 +6,9 @@ const photosUrl = 'https://api.flickr.com/services/rest?method=flickr.photos.sea
 
 // Get photo data:
 fetch(photosUrl)
-.then(response => response.json())
-.then(data => displayPhotoGrid(data))
-.catch(error => console.log('There was an error: ' + error))
+    .then(response => response.json())
+    .then(data => displayPhotoGrid(data))
+    .catch(error => console.log('There was an error: ' + error))
 ;
 
 // Display photo grid:
@@ -21,12 +21,12 @@ function displayPhotoGrid(data) {
         photoObject.photos.push(photo);
 
         listItem += `
-      <li>
-        <a href="${photo.url_m}" data-index="${photoIndex}" onclick="modal.display(this); return false;">
-          <img src="${photo.url_s}" alt="${photo.title}">
-        </a>
-      </li>
-    `;
+          <li>
+            <a href="${photo.url_m}" data-index="${photoIndex}" onclick="modal.display(this); return false;">
+              <img src="${photo.url_s}" alt="${photo.title}">
+            </a>
+          </li>
+        `;
 
         photoIndex++;
     });
@@ -51,6 +51,17 @@ const modal = {
         this.modal.classList.remove("is-open");
     },
 
+    insertTitleAndImage: function (imageTitle, imageSrc) {
+        // Insert Modal Title:
+        this.modalTitle.innerHTML = imageTitle;
+
+        // Insert Modal Body Photo:
+        // (note: alt value is empty since it would be redundant with title)
+        this.modalPhoto.innerHTML = `
+          <img src="${imageSrc}" alt="">
+        `;
+    },
+
     display: function (elem) {
         // Get Index:
         const elemIndex = elem.getAttribute('data-index');
@@ -60,13 +71,8 @@ const modal = {
         const thisPhotoUrl = photo.url_m;
         const thisTitle = photo.title;
 
-        // Insert Modal Title:
-        this.modalTitle.innerHTML = thisTitle;
-
-        // Insert Modal Body Photo:
-        this.modalPhoto.innerHTML = `
-      <img src="${thisPhotoUrl}" alt="">
-    `;
+        // Add Title and Photo to Modal:
+        this.insertTitleAndImage(thisTitle, thisPhotoUrl);
 
         // Display Modal:
         this.show();
@@ -74,27 +80,12 @@ const modal = {
 
     previousPhoto: function () {
         let photo = photoObject.getPrevious();
-
-        // Insert Modal Title:
-        this.modalTitle.innerHTML = photo.title;
-
-        // Insert Modal Body Photo:
-        this.modalPhoto.innerHTML = `
-      <img src="${photo.url_m}" alt="">
-    `;
+        this.insertTitleAndImage(photo.title, photo.url_m);
     },
 
     nextPhoto: function () {
         let photo = photoObject.getNext();
-
-        // Insert Modal Title:
-        this.modalTitle.innerHTML = photo.title;
-
-        // Insert Modal Body Photo:
-        // (note: alt value is empty since it would be redundant with title)
-        this.modalPhoto.innerHTML = `
-      <img src="${photo.url_m}" alt="">
-    `;
+        this.insertTitleAndImage(photo.title, photo.url_m);
     }
 };
 
