@@ -2,13 +2,28 @@
 // (variables, mixins, sass placeholders)
 // --------------------------------------------
 // Variables:
+// break points (just 2 for simplicity)
+$tablet-min-width: 760px;
+$mobile-max-width: ($tablet-min-width - 1);
+
+// colors
 $main-color: hotpink;
 $main-color-dk: darken($main-color, 20%);
-
 $contrast-color: #fff;
 
+// dimensions, time
 $gutter: 1.5rem;
 $timing: 0.3s;
+
+// Mixins:
+@mixin bp($point, $max-point: null) {
+  @if $point == mobile {
+    @media (max-width: $mobile-max-width) {@content;}
+  }
+  @else if $point == tablet-and-above {
+    @media (min-width: $tablet-min-width) {@content;}
+  }
+}
 
 // Placeholders:
 %transition-background {
@@ -35,7 +50,13 @@ $timing: 0.3s;
 }
 
 // Font size set up:
-html {font-size: 62.5%;} // set base (10px)
+html {
+  font-size: 56.25%; // = 9px
+
+  @include bp(tablet-and-above) {
+    font-size: 62.5%; // set base (10px)
+  }
+}
 
 body {
   background: $main-color;
@@ -48,6 +69,14 @@ body {
   margin: 0;
 }
 
+// reduce header font sizes just for mobile, leave at default for other views
+@include bp(mobile) {
+  h1 {font-size: 3.2rem;}
+  h2 {font-size: 2.0rem;}
+  h3 {font-size: 1.8rem;}
+  h4 {font-size: 1.6rem;}
+}
+
 button {
   @extend %transition-background;
   background: $main-color;
@@ -57,7 +86,7 @@ button {
   font: inherit;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 0.6em 0.8em;
+  padding: 0.5em 0.6em;
 
   &:hover {
     background: $main-color-dk;
@@ -115,8 +144,8 @@ button {
   li {
     @extend %transition-transform;
     border: 2px solid;
-    width: 200px;
-    height: 200px;
+    width: 20.0rem;
+    height: 20.0rem;
     position: relative;
     margin: ($gutter / 2);
 
@@ -165,7 +194,7 @@ button {
   &__header {
     border-bottom: 2px solid;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-shrink: 0;
     justify-content: space-between;
     padding: 1.5rem 2.0rem;
@@ -173,7 +202,33 @@ button {
 
   &__close {
     order: 1;
-    margin-left: 1em;
+    margin-left: .5em;
+
+    @include bp(mobile) {
+      font-size: 2.5rem;
+      text-indent: 100%;
+      width: 1em;
+      height: 1em;
+      overflow: hidden;
+      position: relative;
+
+      &:before {
+        background: inherit;
+        text-indent: 0;
+        line-height: 1;
+        content: "X";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        &:hover {
+          color: $main-color-dk;
+        }
+      }
+    }
   }
 
   &__title {
@@ -193,10 +248,17 @@ button {
 
 .image-viewer {
   $arrow-size: 3.0rem;
+  $image-max-width: 50.0rem;
 
-  max-width: (($arrow-size * 4) + 50.0rem);
+  max-width: (($arrow-size * 2 + (1.0rem * 2)) + $image-max-width);
+  padding: 0 ($arrow-size + 1.0rem);
+
+  @include bp(tablet-and-above) {
+    max-width: (($arrow-size * 4) + $image-max-width);
+    padding: 0 ($arrow-size * 2);
+  }
+
   height: 100%;
-  padding: 0 ($arrow-size * 2);
   margin: 0 auto;
   position: relative;
 
