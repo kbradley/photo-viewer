@@ -8,32 +8,43 @@
 </head>
 
 <body>
-	<header class="page-header" role="banner">
-		<h1>Puppies</h1>
-	</header>
+	<!-- Page Template Component -->
+	<div class="page">
+		<header class="page__header" role="banner">
+			<h1>Puppies</h1>
+		</header>
+		
+		<main class="page__main">
+			<ul class="photo-grid" id="photo-grid"></ul>
+		</main>
+		
+		<footer class="page__footer" role="contentinfo">
+			<p>© 2018 by Puppy Co, all rights reserved.</p>
+		</footer>
+	</div>
 	
-	<main class="page-main">
-		<ul class="photo-grid" id="photo-grid"></ul>
-	</main>
-	
-	<footer class="page-footer" role="contentinfo">
-		<p>© 2018 Puppy Co, all rights reserved</p>
-	</footer>
-	
-	<div class="modal" id="modal">
+	<!-- Modal Component -->
+	<div class="modal" id="modal-container">
 		<header class="modal__header">
-			<button type="button" class="modal__close" id="modal-button">
+			<button type="button" class="modal__close" id="modal-button" onclick="modal.hide();">
 				Close
 			</button>
 			
 			<h2 id="modal-title">Photo Name</h2>
 		</header>
 		
-		<div class="modal__body" id="modal-body">
-			<div class="modal-photo" id="modal-photo"></div>
-			
-			<button type="button" class="prev-button">❮ Prev</button>
-			<button type="button" class="last-button">Next ❯</button>
+		<div class="modal__body">
+			<div class="image-viewer">
+				<button type="button" class="image-viewer__prev" onclick="modal.previousPhoto();">
+					<span class="u-visually-hidden">Previous</span>
+				</button>
+				
+				<button type="button" class="image-viewer__next" onclick="modal.nextPhoto();">
+					<span class="u-visually-hidden">Next</span>
+				</button>
+				
+				<div class="image-viewer__window" id="modal-photo"></div>
+			</div>
 		</div>
 	</div>
 	
