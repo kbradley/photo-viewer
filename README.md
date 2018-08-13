@@ -1,6 +1,6 @@
 # Photo Viewer
 
-Uses Sass for styles. Compass is used just for compiling to CSS.
+Written using vanilla JavaScript with Sass for styles, no frameworks. Compass is used just for compiling Sass to CSS.
 
 Watch Sass files and compile to CSS:  
 ```
