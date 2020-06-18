@@ -6,9 +6,9 @@ const photosUrl = 'https://api.flickr.com/services/rest?method=flickr.photos.sea
 
 // Get photo data:
 fetch(photosUrl)
-    .then(response => response.json())
+    .then(response => response.ok ? response.json() : Promise.reject(response))
     .then(data => displayPhotoGrid(data))
-    .catch(error => console.log('There was an error: ' + error))
+    .catch(error => console.log(`There was an error! ${error}`))
 ;
 
 // Display photo grid:
