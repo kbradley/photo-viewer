@@ -10,7 +10,11 @@ const sassOptions = {
 
 gulp.task('sass', function () {
   return gulp
-    .src('./src/sass/styles.scss')
+    .src('./src/sass/**/*.scss')
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('sass:watch', function () {
+  gulp.watch('./src/sass/**/*.scss');
 });
