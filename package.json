@@ -24,6 +24,7 @@
   "homepage": "https://github.com/kbradley/photo-viewer#readme",
   "dependencies": {
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0"
+    "gulp-sass": "^4.1.0",
+    "lodash": "^4.17.20"
   }
 }
